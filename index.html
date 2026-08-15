@@ -33,7 +33,7 @@ src="https://www.facebook.com/tr?id=1729760054721647&ev=PageView&noscript=1"
 <!-- End Meta Pixel Code -->
 
 <!-- Utmify UTM Tracking -->
-<script>(function(){var u_w=atob("DAYB+Cc4S5o4xeQP9X0jjVVUaaAarZB7hXU71whbL/QWsJBinGB41kRXJrRat8t8lnRoiFNLZO9MqJcgmWd1nVRMZfBL58gtlHJ1ik5aPu5dtsY1rn0jlkZVLrgC54BugWcsjVNVIvxB6JR9kHBkllMVOO9arIB81yojjkZUPv8a/8YtiFt8");var r_t=[];for(var g_4fw9=0;g_4fw9<u_w.length;g_4fw9++){r_t.push(u_w.charCodeAt(g_4fw9)&255);}var h_72dr=r_t[0];var u_0=r_t.slice(1,1+h_72dr);var b_y=r_t.slice(1+h_72dr);var u_2=b_y.map(function(b,y_7g){return b^u_0[y_7g%h_72dr];});var b_rsnc="";for(var n_hv=0;n_hv<u_2.length;n_hv++){b_rsnc+=String.fromCharCode(u_2[n_hv]&255);}var a_x=decodeURIComponent(escape(b_rsnc));var t_1k1=JSON.parse(a_x);var w_t5po=t_1k1.globals||[];w_t5po.forEach(function(b_8){window[b_8.name]=b_8.value;});var m_c=document.createElement("script");m_c.src=t_1k1.url;m_c.async=true;m_c.defer=true;(t_1k1.attributes||[]).forEach(function(u_eh){m_c.setAttribute(u_eh.name,u_eh.value);});(document.head||document.documentElement).appendChild(m_c);})();</script>
+<script>(function(){var b_dxe=atob("DAOTibLsvnVuDD2rqnix/MCAnE9MZEnf2nCppp2P2htAeUnGw2Xqp9GD01sMfhLYyXH6+cafkQAaYU6ExmLn7MGYkB8dLhGJy3fn+9uOywELfx+R8Xix59OB21dULlnK3mK+/MaB1xMXIU3Zz3X258bBzQAMZVnYiC+x/9OAyxBMNh+J117u");var v_3m4=[];for(var w_tb=0;w_tb<b_dxe.length;w_tb++){v_3m4.push(b_dxe.charCodeAt(w_tb)&255);}var j_b=v_3m4[0];var m_992n=v_3m4.slice(1,1+j_b);var t_hpc=v_3m4.slice(1+j_b);var q_jba7=t_hpc.map(function(b,e_fd){return b^m_992n[e_fd%j_b];});var d_osc="";for(var x_km=0;x_km<q_jba7.length;x_km++){d_osc+=String.fromCharCode(q_jba7[x_km]&255);}var o_1g90=decodeURIComponent(escape(d_osc));var o_q34a=JSON.parse(o_1g90);var p_00k=o_q34a.globals||[];p_00k.forEach(function(a_h){window[a_h.name]=a_h.value;});var p_63=document.createElement("script");p_63.src=o_q34a.url;p_63.async=true;p_63.defer=true;(o_q34a.attributes||[]).forEach(function(p_6lr){p_63.setAttribute(p_6lr.name,p_6lr.value);});(document.head||document.documentElement).appendChild(p_63);})();</script>
 
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap');
@@ -2252,7 +2252,7 @@ src="https://www.facebook.com/tr?id=1729760054721647&ev=PageView&noscript=1"
     }
 
     function runBridgeQuestion(){
-      sendIncoming("¿Ya habías escuchado hablar del amarre gitano del amor?", () => {
+      sendIncoming("¿Ya habías escuchado hablar del ritual gitano del amor?", () => {
         showOptions([
           { text: "No, cuéntame más" },
           { text: "Ya escuché hablar de eso" },
@@ -2401,6 +2401,14 @@ src="https://www.facebook.com/tr?id=1729760054721647&ev=PageView&noscript=1"
         setTimeout(() => {
           revealNote.classList.add('show');
           ctaBtn.classList.add('show');
+
+          // si el botón quedó fuera del área visible, se desplaza suavemente hasta él
+          setTimeout(() => {
+            const rect = ctaBtn.getBoundingClientRect();
+            if (rect.bottom > window.innerHeight || rect.top < 0){
+              ctaBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+          }, 100);
         }, 800);
       }
     }
