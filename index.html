@@ -228,6 +228,36 @@ src="https://www.facebook.com/tr?id=1729760054721647&ev=PageView&noscript=1"
     font-weight: 800;
   }
 
+  .loading-overlay{
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    background: var(--bg);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .loading-overlay.show{ opacity: 1; pointer-events: auto; }
+  .loading-overlay p{
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--text-dim);
+  }
+  .loading-overlay .spinner-ring{
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 3px solid rgba(201,162,74,0.2);
+    border-top-color: var(--gold-soft);
+    animation: spin 1s linear infinite;
+  }
+  @keyframes spin{ to{ transform: rotate(360deg); } }
+
   @media (max-height: 700px){
     .frame{ padding-top: 28px; gap: clamp(12px, 2.6vh, 18px); }
   }
@@ -253,6 +283,11 @@ src="https://www.facebook.com/tr?id=1729760054721647&ev=PageView&noscript=1"
       <strong>Atención:</strong> esto no es magia negra, brujería ni amarre temporal. Si buscas eso, puedes irte de aquí. Esto es trabajo espiritual.
     </div>
 
+  </div>
+
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="spinner-ring"></div>
+    <p>Entrando en la conversación con Samira...</p>
   </div>
 </template>
 
@@ -858,6 +893,35 @@ src="https://www.facebook.com/tr?id=1729760054721647&ev=PageView&noscript=1"
     50%{ box-shadow: 0 10px 32px -4px rgba(201,162,74,0.8); }
   }
   .cta-btn svg{ width: 19px; height: 19px; flex-shrink: 0; }
+  .loading-overlay{
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    background: var(--bg);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .loading-overlay.show{ opacity: 1; pointer-events: auto; }
+  .loading-overlay p{
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--text-dim);
+  }
+  .loading-overlay .spinner-ring{
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 3px solid rgba(201,162,74,0.2);
+    border-top-color: var(--gold-soft);
+    animation: spin 1s linear infinite;
+  }
+  @keyframes spin{ to{ transform: rotate(360deg); } }
 
 :host{ width:100%; }
 </style>
@@ -876,6 +940,11 @@ src="https://www.facebook.com/tr?id=1729760054721647&ev=PageView&noscript=1"
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
     </button>
 
+  </div>
+
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="spinner-ring"></div>
+    <p>Cargando tu lectura completa...</p>
   </div>
 </template>
 
@@ -1866,10 +1935,14 @@ src="https://www.facebook.com/tr?id=1729760054721647&ev=PageView&noscript=1"
 </template><script type="text/plain" id="script-step-1">
 
     root.getElementById('ctaBtn').addEventListener('click', () => {
-      goNext();
-      if (window.parent && window.parent !== window){
-        window.parent.postMessage('funil:avancar', '*');
-      }
+      const overlay = root.getElementById('loadingOverlay');
+      overlay.classList.add('show');
+      setTimeout(() => {
+        goNext();
+        if (window.parent && window.parent !== window){
+          window.parent.postMessage('funil:avancar', '*');
+        }
+      }, 1800);
     });
   
 </script>
@@ -2333,10 +2406,14 @@ src="https://www.facebook.com/tr?id=1729760054721647&ev=PageView&noscript=1"
     }
 
     ctaBtn.addEventListener('click', () => {
-      goNext();
-      if (window.parent && window.parent !== window){
-        window.parent.postMessage('funil:avancar', '*');
-      }
+      const overlay = root.getElementById('loadingOverlay');
+      overlay.classList.add('show');
+      setTimeout(() => {
+        goNext();
+        if (window.parent && window.parent !== window){
+          window.parent.postMessage('funil:avancar', '*');
+        }
+      }, 1800);
     });
   
 </script>
