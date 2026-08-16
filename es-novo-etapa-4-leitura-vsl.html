@@ -210,10 +210,15 @@
     // video se pausa o se traba cargando en el medio.
     const CTA_REVEAL_SECONDS = 91; // 1:31
 
+    const PAGE_START = Date.now();
+    console.log('[CTA-DEBUG] página cargada, contando desde aquí');
+
     let revealed = false;
-    function revealCta(){
+    function revealCta(motivo){
       if (revealed) return;
       revealed = true;
+      const segundosTranscurridos = ((Date.now() - PAGE_START) / 1000).toFixed(1);
+      console.log('[CTA-DEBUG] botón revelado. Motivo:', motivo, '| segundos desde que cargó la página:', segundosTranscurridos);
       ctaBtn.classList.add('show');
       endGlow.classList.add('show');
     }
@@ -223,7 +228,7 @@
     const observer = new MutationObserver(() => {
       if (getComputedStyle(ctaTrigger).display !== 'none'){
         observer.disconnect();
-        revealCta();
+        revealCta('disparador del VTurb (displayHiddenElements)');
       }
     });
     observer.observe(ctaTrigger, { attributes: true, attributeFilter: ['style', 'class'] });
@@ -232,11 +237,13 @@
     // Fallback: si el player nunca carga (ej: sin internet, bloqueo),
     // libera el botón de todos modos después de un tiempo generoso, para
     // nunca dejar a la persona atascada en la pantalla sin poder avanzar.
-    const hardFallback = setTimeout(revealCta, (CTA_REVEAL_SECONDS + 15) * 1000);
+    const hardFallback = setTimeout(() => revealCta('fallback de seguridad (' + (CTA_REVEAL_SECONDS + 15) + 's sin respuesta del VTurb)'), (CTA_REVEAL_SECONDS + 15) * 1000);
     function waitForPlayer(){
       const player = document.querySelector('vturb-smartplayer');
       if (player){
+        console.log('[CTA-DEBUG] elemento vturb-smartplayer encontrado en la página, esperando evento player:ready...');
         player.addEventListener('player:ready', function(){
+          console.log('[CTA-DEBUG] evento player:ready disparó. Llamando displayHiddenElements con delay de', CTA_REVEAL_SECONDS, 'segundos.');
           player.displayHiddenElements(CTA_REVEAL_SECONDS, ['.esconder'], { persist: true });
         });
       } else {
