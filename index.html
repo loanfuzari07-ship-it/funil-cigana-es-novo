@@ -468,6 +468,30 @@ src="https://www.facebook.com/tr?id=1729760054721647&ev=PageView&noscript=1"
     30%{ transform: translateY(-4px); opacity: 1; }
   }
 
+  .recording-bubble{
+    background: var(--bubble);
+    border: 1px solid var(--bubble-border);
+    border-radius: 4px 14px 14px 14px;
+    padding: 10px 14px;
+    display:flex;
+    align-items:center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-dim);
+    font-style: italic;
+  }
+  .rec-dot{
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #ff4d4d;
+    flex-shrink: 0;
+    animation: recPulse 1s ease-in-out infinite;
+  }
+  @keyframes recPulse{
+    0%,100%{ opacity: 1; transform: scale(1); }
+    50%{ opacity: 0.4; transform: scale(0.75); }
+  }
+
   /* audio bubble */
   .audio-bubble{
     display:flex;
@@ -1966,6 +1990,15 @@ src="https://www.facebook.com/tr?id=1729760054721647&ev=PageView&noscript=1"
       return row;
     }
 
+    function showRecording(){
+      const row = document.createElement('div');
+      row.className = 'typing-row';
+      row.innerHTML = `<div class="recording-bubble"><span class="rec-dot"></span>Grabando audio...</div>`;
+      chatBody.appendChild(row);
+      scrollToBottom();
+      return row;
+    }
+
     function showIncoming(text){
       const row = document.createElement('div');
       row.className = 'msg-row';
@@ -2226,9 +2259,9 @@ src="https://www.facebook.com/tr?id=1729760054721647&ev=PageView&noscript=1"
 
     function runMechanismBranch(isAudio){
       if (isAudio){
-        const typing = showTyping();
+        const recording = showRecording();
         setTimeout(() => {
-          typing.remove();
+          recording.remove();
           showAudioBubble();
           setTimeout(() => {
             sendIncoming("Confírmame cuando termines de escuchar el audio 🙏", () => {
@@ -2238,7 +2271,7 @@ src="https://www.facebook.com/tr?id=1729760054721647&ev=PageView&noscript=1"
               });
             });
           }, 700);
-        }, 1000);
+        }, 2200);
       } else {
         playTextSequence(MECHANISM_TEXT, 0, () => {
           setTimeout(() => {
