@@ -254,7 +254,11 @@
     waitForPlayer();
 
     ctaBtn.addEventListener('click', () => {
-      window.location.href = 'https://pay.hotmart.com/B107153717L?checkoutMode=10';
+      // Usa window.top pra redirigir la PESTAÑA COMPLETA del navegador, no
+      // solo este iframe. Si usáramos window.location aquí dentro, Hotmart
+      // intentaría cargar dentro del iframe y se trabaría (las páginas de
+      // pago bloquean mostrarse dentro de un iframe por seguridad).
+      window.top.location.href = 'https://pay.hotmart.com/B107153717L?checkoutMode=10';
     });
   </script>
 </body>
