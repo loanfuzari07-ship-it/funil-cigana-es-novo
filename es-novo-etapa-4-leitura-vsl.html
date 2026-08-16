@@ -196,7 +196,7 @@
     const endGlow = document.getElementById('endGlow');
     const videoWrap = document.querySelector('.video-wrap');
 
-    // El botón debe aparecer exactamente en el minuto 1:31 DESPUÉS de
+    // El botón debe aparecer exactamente en el minuto 1:41 DESPUÉS de
     // que la persona haga clic en play de verdad. Ya probamos el mecanismo
     // oficial del VTurb (displayHiddenElements) y confirmamos, con captura
     // de pantalla real del entorno de producción, que revela el botón
@@ -205,7 +205,10 @@
     // dejamos de confiar en cualquier API de ellos y usamos solo un
     // cronómetro propio, disparado por el clic real de la persona en el
     // área del video.
-    const CTA_REVEAL_SECONDS = 91; // 1:31
+    const CTA_REVEAL_SECONDS = 101; // 1:41 (tiempo objetivo real en el video)
+    // Pequeño margen para compensar el retraso de carga entre el toque en
+    // play y el video realmente empezar a correr (medido en la práctica).
+    const LOADING_BUFFER_SECONDS = 3;
 
     let revealed = false;
     function revealCta(motivo){
@@ -228,7 +231,7 @@
         document.removeEventListener('click', onFirstInteraction, true);
         document.removeEventListener('touchend', onFirstInteraction, true);
         console.log('[CTA-DEBUG] toque/clic detectado en el área del video (evento: ' + e.type + '). Iniciando cronómetro propio de', CTA_REVEAL_SECONDS, 'segundos.');
-        setTimeout(() => revealCta('cronómetro propio, iniciado por el toque real en el video'), CTA_REVEAL_SECONDS * 1000);
+        setTimeout(() => revealCta('cronómetro propio, iniciado por el toque real en el video'), (CTA_REVEAL_SECONDS + LOADING_BUFFER_SECONDS) * 1000);
       }
     }
     document.addEventListener('click', onFirstInteraction, true);
