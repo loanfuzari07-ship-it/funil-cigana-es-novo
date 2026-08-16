@@ -191,12 +191,6 @@
       </script>
     </div>
 
-    <!-- Disparador invisible: el VTurb controla ESTE elemento con el mecanismo
-         oficial de ellos (displayHiddenElements), que sigue el tiempo real
-         de reproducción del video. Cuando revela este disparador, nosotros
-         disparamos nuestra propia animación en el botón. -->
-    <div class="esconder" id="ctaTrigger" style="width:0; height:0; overflow:hidden;"></div>
-
   </div>
 
   <div class="end-glow" id="endGlow"></div>
@@ -208,57 +202,69 @@
 
   <script>
     const ctaBtn = document.getElementById('ctaBtn');
-    const ctaTrigger = document.getElementById('ctaTrigger');
     const endGlow = document.getElementById('endGlow');
 
     // El botón debe aparecer exactamente en el minuto 5:37 del video.
-    // Usamos el mecanismo OFICIAL del propio VTurb (displayHiddenElements),
-    // que sincroniza con el tiempo REAL de reproducción del video, no con
-    // el reloj de la página, así que sigue siendo preciso incluso si el
-    // video se pausa o se traba cargando en el medio.
+    // IMPORTANTE: probamos el mecanismo oficial del VTurb (displayHiddenElements)
+    // y confirmamos que NO sigue el tiempo real de reproducción, cuenta desde
+    // que el player queda listo (cargado), incluso si la persona nunca hace
+    // clic en play. Por eso, en vez de depender de eso, buscamos el elemento
+    // <video> nativo del navegador que existe detrás del player, y usamos su
+    // tiempo de reproducción genuino (currentTime), que solo avanza cuando el
+    // video está realmente reproduciéndose.
     const CTA_REVEAL_SECONDS = 337; // 5:37
-
-    const PAGE_START = Date.now();
-    console.log('[CTA-DEBUG] página cargada, contando desde aquí');
 
     let revealed = false;
     function revealCta(motivo){
       if (revealed) return;
       revealed = true;
-      const segundosTranscurridos = ((Date.now() - PAGE_START) / 1000).toFixed(1);
-      console.log('[CTA-DEBUG] botón revelado. Motivo:', motivo, '| segundos desde que cargó la página:', segundosTranscurridos);
+      console.log('[CTA-DEBUG] botón revelado. Motivo:', motivo);
       ctaBtn.classList.add('show');
       endGlow.classList.add('show');
     }
 
-    // Observa el disparador: en cuanto el VTurb le quite el "display:none"
-    // (vía displayHiddenElements), disparamos nuestra animación normal.
-    const observer = new MutationObserver(() => {
-      if (getComputedStyle(ctaTrigger).display !== 'none'){
-        observer.disconnect();
-        revealCta('disparador del VTurb (displayHiddenElements)');
+    // Búsqueda recursiva de un elemento <video> real, incluso dentro de
+    // shadow roots abiertos (donde el player probablemente esconde el video).
+    function findVideoElement(root){
+      if (!root) return null;
+      if (root.querySelector){
+        const direct = root.querySelector('video');
+        if (direct) return direct;
       }
-    });
-    observer.observe(ctaTrigger, { attributes: true, attributeFilter: ['style', 'class'] });
+      const all = root.querySelectorAll ? root.querySelectorAll('*') : [];
+      for (let i = 0; i < all.length; i++){
+        if (all[i].shadowRoot){
+          const found = findVideoElement(all[i].shadowRoot);
+          if (found) return found;
+        }
+      }
+      return null;
+    }
 
-    // Se conecta con la API oficial del player en cuanto exista en la página.
-    // Fallback: si el player nunca carga (ej: sin internet, bloqueo),
-    // libera el botón de todos modos después de un tiempo generoso, para
-    // nunca dejar a la persona atascada en la pantalla sin poder avanzar.
-    const hardFallback = setTimeout(() => revealCta('fallback de seguridad (' + (CTA_REVEAL_SECONDS + 15) + 's sin respuesta del VTurb)'), (CTA_REVEAL_SECONDS + 15) * 1000);
-    function waitForPlayer(){
-      const player = document.querySelector('vturb-smartplayer');
-      if (player){
-        console.log('[CTA-DEBUG] elemento vturb-smartplayer encontrado en la página, esperando evento player:ready...');
-        player.addEventListener('player:ready', function(){
-          console.log('[CTA-DEBUG] evento player:ready disparó. Llamando displayHiddenElements con delay de', CTA_REVEAL_SECONDS, 'segundos.');
-          player.displayHiddenElements(CTA_REVEAL_SECONDS, ['.esconder'], { persist: true });
+    let searchAttempts = 0;
+    function trySetupVideo(){
+      const video = findVideoElement(document);
+      if (video){
+        console.log('[CTA-DEBUG] elemento <video> real encontrado, sincronizando con el tiempo de reproducción genuino.');
+        video.addEventListener('timeupdate', () => {
+          if (!revealed && video.currentTime >= CTA_REVEAL_SECONDS){
+            revealCta('tiempo real de reproducción del video (' + video.currentTime.toFixed(1) + 's)');
+          }
         });
+      } else if (searchAttempts < 150){
+        searchAttempts++;
+        setTimeout(trySetupVideo, 200);
       } else {
-        setTimeout(waitForPlayer, 200);
+        console.log('[CTA-DEBUG] no fue posible encontrar el elemento <video> real después de 30s de intentos.');
       }
     }
-    waitForPlayer();
+    trySetupVideo();
+
+    // Fallback de seguridad ABSOLUTO: solo existe para nunca dejar a la
+    // persona atascada en la pantalla, en caso de que no sea posible
+    // encontrar el video real por algún motivo. Es bastante más largo de lo
+    // normal, a propósito, para nunca disparar antes de tiempo.
+    setTimeout(() => revealCta('fallback de seguridad absoluto (video no encontrado)'), (CTA_REVEAL_SECONDS * 5) * 1000);
 
     ctaBtn.addEventListener('click', () => {
       // Usa window.top pra redirigir la PESTAÑA COMPLETA del navegador, no
