@@ -107,13 +107,9 @@
 
   /* ---- CTA ---- */
   .cta-btn{
-    position: fixed;
-    left: 20px;
-    right: 20px;
-    bottom: max(20px, env(safe-area-inset-bottom));
-    z-index: 20;
+    width: 100%;
     max-width: 380px;
-    margin: 0 auto;
+    margin: 8px auto 0;
     display:flex;
     align-items:center;
     justify-content:center;
@@ -147,7 +143,6 @@
   .end-glow.show{ opacity: 1; }
 
   /* da espacio al final de la página para que el botón fijo no tape el video */
-  .frame{ padding-bottom: 100px; }
   .cta-btn svg{ width: 19px; height: 19px; flex-shrink: 0; }
 
   /* Clase usada por el mecanismo oficial del VTurb (displayHiddenElements)
@@ -187,14 +182,14 @@
          eventos de play/pause no den señal de vida (ver estrategia 3). -->
     <div class="esconder" id="ctaTrigger" style="width:0; height:0; overflow:hidden;"></div>
 
-  </div>
-
-  <div class="end-glow" id="endGlow"></div>
-
-  <button class="cta-btn" id="ctaBtn">
+    <button class="cta-btn" id="ctaBtn">
     Continuar
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
   </button>
+
+  </div>
+
+  <div class="end-glow" id="endGlow"></div>
 
   <script>
     const ctaBtn = document.getElementById('ctaBtn');
@@ -214,6 +209,14 @@
       console.log('[CTA-DEBUG] botón revelado. Motivo:', motivo);
       ctaBtn.classList.add('show');
       endGlow.classList.add('show');
+
+      // se o botão ficou fora da área visível, rola suavemente até ele
+      setTimeout(() => {
+        const rect = ctaBtn.getBoundingClientRect();
+        if (rect.bottom > window.innerHeight || rect.top < 0){
+          ctaBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 100);
     }
 
     // Observa el disparador: en cuanto el VTurb le quite el "display:none"
