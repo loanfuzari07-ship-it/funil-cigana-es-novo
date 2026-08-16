@@ -113,9 +113,13 @@
 
   /* ---- CTA fixo ---- */
   .cta-btn{
-    width: 100%;
+    position: fixed;
+    left: 20px;
+    right: 20px;
+    bottom: max(20px, env(safe-area-inset-bottom));
+    z-index: 20;
     max-width: 380px;
-    margin: 8px auto 0;
+    margin: 0 auto;
     display:flex;
     align-items:center;
     justify-content:center;
@@ -145,6 +149,7 @@
     0%,100%{ box-shadow: 0 10px 28px -8px rgba(201,162,74,0.55); }
     50%{ box-shadow: 0 10px 32px -4px rgba(201,162,74,0.8); }
   }
+  .frame{ padding-bottom: 100px; }
   .cta-btn svg{ width: 19px; height: 19px; flex-shrink: 0; }
 
   /* Clase usada por el mecanismo oficial del VTurb (displayHiddenElements)
@@ -184,30 +189,30 @@
         s.async = true;
         document.head.appendChild(s);
       </script>
-    </div>
-
-    <!-- Disparador invisible: usado solo como refuerzo, en caso de que los
-         eventos de play/pause no den señal de vida (ver estrategia 3). -->
-    <div class="esconder" id="ctaTrigger" style="width:0; height:0; overflow:hidden;"></div>
-
-    <button class="cta-btn" id="ctaBtn">
-    Acceder a Mi Ritual Ahora
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-  </button>
 
   </div>
 
   <div class="end-glow" id="endGlow"></div>
 
+  <button class="cta-btn" id="ctaBtn">
+    Acceder a Mi Ritual Ahora
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+  </button>
+
   <script>
     const ctaBtn = document.getElementById('ctaBtn');
     const endGlow = document.getElementById('endGlow');
-    const ctaTrigger = document.getElementById('ctaTrigger');
+    const videoWrap = document.querySelector('.video-wrap');
 
-    // El botón debe aparecer exactamente en el minuto 5:37 del video.
-    // Implementación oficial del VTurb (displayHiddenElements), que según
-    // su documentación sigue el tiempo real de reproducción, incluso
-    // pausando el conteo si el video se pausa.
+    // El botón debe aparecer exactamente en el minuto 5:37 DESPUÉS de
+    // que la persona haga clic en play de verdad. Ya probamos el mecanismo
+    // oficial del VTurb (displayHiddenElements) y confirmamos, con captura
+    // de pantalla real del entorno de producción, que revela el botón
+    // casi de inmediato, incluso con el video todavía mostrando "toca para
+    // ver" (o sea, no funciona como promete la documentación). Por eso,
+    // dejamos de confiar en cualquier API de ellos y usamos solo un
+    // cronómetro propio, disparado por el clic real de la persona en el
+    // área del video.
     const CTA_REVEAL_SECONDS = 337; // 5:37
 
     let revealed = false;
@@ -217,45 +222,30 @@
       console.log('[CTA-DEBUG] botón revelado. Motivo:', motivo);
       ctaBtn.classList.add('show');
       endGlow.classList.add('show');
-
-      // se o botão ficou fora da área visível, rola suavemente até ele
-      setTimeout(() => {
-        const rect = ctaBtn.getBoundingClientRect();
-        if (rect.bottom > window.innerHeight || rect.top < 0){
-          ctaBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-      }, 100);
     }
 
-    // Observa el disparador: en cuanto el VTurb le quite el "display:none"
-    // (vía displayHiddenElements), disparamos nuestra animación normal.
-    const observer = new MutationObserver(() => {
-      if (getComputedStyle(ctaTrigger).display !== 'none'){
-        observer.disconnect();
-        revealCta('disparador del VTurb (displayHiddenElements)');
-      }
-    });
-    observer.observe(ctaTrigger, { attributes: true, attributeFilter: ['style', 'class'] });
-
-    function waitForPlayer(){
-      const player = document.querySelector('vturb-smartplayer');
-      if (player){
-        console.log('[CTA-DEBUG] elemento vturb-smartplayer encontrado, esperando player:ready...');
-        player.addEventListener('player:ready', function(){
-          console.log('[CTA-DEBUG] player:ready disparó. Llamando displayHiddenElements con', CTA_REVEAL_SECONDS, 'segundos.');
-          player.displayHiddenElements(CTA_REVEAL_SECONDS, ['.esconder'], { persist: true });
-        });
-      } else {
-        setTimeout(waitForPlayer, 200);
+    // Escucha el clic real de la persona en el área del video (ahí está
+    // el "toca para ver" del player). Usamos la FASE DE CAPTURA (tercer
+    // argumento `true`) para garantizar que detectamos el clic incluso si
+    // el player interno cancela la propagación del evento después.
+    let videoClicked = false;
+    function onFirstInteraction(e){
+      if (videoClicked) return;
+      if (videoWrap && videoWrap.contains(e.target)){
+        videoClicked = true;
+        document.removeEventListener('click', onFirstInteraction, true);
+        document.removeEventListener('touchend', onFirstInteraction, true);
+        console.log('[CTA-DEBUG] toque/clic detectado en el área del video (evento: ' + e.type + '). Iniciando cronómetro propio de', CTA_REVEAL_SECONDS, 'segundos.');
+        setTimeout(() => revealCta('cronómetro propio, iniciado por el toque real en el video'), CTA_REVEAL_SECONDS * 1000);
       }
     }
-    waitForPlayer();
+    document.addEventListener('click', onFirstInteraction, true);
+    document.addEventListener('touchend', onFirstInteraction, true);
 
     // Fallback de seguridad: solo existe para nunca dejar a la persona
-    // atascada en la pantalla, en caso de que el player nunca cargue por
-    // algún motivo (ej: sin internet, bloqueo). Bastante más largo de lo
-    // normal, a propósito.
-    setTimeout(() => revealCta('fallback de seguridad (' + (CTA_REVEAL_SECONDS * 3) + 's sin respuesta del VTurb)'), (CTA_REVEAL_SECONDS * 3) * 1000);
+    // atascada en la pantalla para siempre, en caso de que nunca haga
+    // clic en el video por algún motivo muy fuera de lo normal.
+    setTimeout(() => revealCta('fallback de seguridad absoluto'), (CTA_REVEAL_SECONDS * 5) * 1000);
 
     ctaBtn.addEventListener('click', () => {
       // Usa window.top pra redirigir la PESTAÑA COMPLETA del navegador, no
