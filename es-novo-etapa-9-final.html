@@ -255,7 +255,25 @@
       // solo este iframe. Si usáramos window.location aquí dentro, Hotmart
       // intentaría cargar dentro del iframe y se trabaría (las páginas de
       // pago bloquean mostrarse dentro de un iframe por seguridad).
-      window.top.location.href = 'https://pay.hotmart.com/B107153717L?checkoutMode=10';
+      const baseCheckoutUrl = 'https://pay.hotmart.com/B107153717L?checkoutMode=10';
+      let finalUrl = baseCheckoutUrl;
+
+      // Traspasa los parámetros UTM de la página principal (donde el
+      // Utmify rastrea) al link del checkout, si no el rastreo se pierde
+      // aquí — nuestra redirección se hace vía JS con URL fija, el
+      // Utmify no puede anexar los UTMs automáticamente en ese caso
+      // como lo haría con un link <a> normal.
+      try {
+        const topSearch = window.top.location.search; // ej: "?utm_source=facebook&utm_campaign=xyz"
+        if (topSearch && topSearch.length > 1){
+          finalUrl = baseCheckoutUrl + '&' + topSearch.slice(1);
+        }
+      } catch (e){
+        console.log('[CTA-DEBUG] no fue posible acceder a los parámetros UTM de la página principal:', e);
+      }
+
+      console.log('[CTA-DEBUG] yendo al checkout:', finalUrl);
+      window.top.location.href = finalUrl;
     });
   </script>
 </body>
