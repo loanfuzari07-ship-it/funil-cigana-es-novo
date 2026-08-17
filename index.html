@@ -978,202 +978,6 @@ src="https://www.facebook.com/tr?id=1729760054721647&ev=PageView&noscript=1"
     --bg: #0a0908;
     --gold: #c9a24a;
     --gold-soft: #e6c977;
-    --green: #6bec9e;
-    --red-x: #ef6a6a;
-    --text: #f3ede1;
-    --text-dim: #a89e8c;
-    --border: rgba(201,162,74,0.28);
-  }
-
-  *{ margin:0; padding:0; box-sizing:border-box; }:host{
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Manrope', sans-serif;
-    min-height: 100vh;
-    display:flex;
-    justify-content:center;
-    position:relative;
-    overflow-x:hidden;
-  }
-
-  body::before{
-    content:"";
-    position:fixed;
-    inset:0;
-    background-image:
-      radial-gradient(1px 1px at 12% 10%, rgba(201,162,74,0.4) 0%, transparent 60%),
-      radial-gradient(1px 1px at 85% 8%, rgba(201,162,74,0.35) 0%, transparent 60%),
-      radial-gradient(1.5px 1.5px at 65% 40%, rgba(201,162,74,0.28) 0%, transparent 60%),
-      radial-gradient(1px 1px at 25% 65%, rgba(201,162,74,0.3) 0%, transparent 60%),
-      radial-gradient(1px 1px at 90% 80%, rgba(201,162,74,0.22) 0%, transparent 60%);
-    pointer-events:none;
-    opacity:0.7;
-  }
-
-  .frame{
-    width: 100%;
-    max-width: 420px;
-    margin: 0 auto;
-    display:flex;
-    flex-direction:column;
-    padding: clamp(26px, 6vh, 40px) clamp(18px, 6vw, 26px) clamp(32px, 6vh, 48px);
-    position:relative;
-    z-index:1;
-    gap: clamp(20px, 3.6vh, 28px);
-  }
-
-  h1{
-    font-family: 'Playfair Display', serif;
-    font-weight: 700;
-    font-size: clamp(18px, 4.8vw, 21px);
-    line-height: 1.45;
-    text-align: center;
-    color: var(--text);
-  }
-  h1 .accent{ color: var(--gold-soft); }
-
-  /* ---- sem / com panels ---- */
-  .panel{
-    border-radius: 16px;
-    padding: clamp(16px, 4.2vw, 20px);
-    border: 1px solid;
-  }
-  .panel-sem{
-    background: linear-gradient(155deg, rgba(239,106,106,0.12), rgba(19,17,16,0.5));
-    border-color: rgba(239,106,106,0.35);
-  }
-  .panel-com{
-    background: linear-gradient(155deg, rgba(107,236,158,0.12), rgba(19,17,16,0.5));
-    border-color: rgba(107,236,158,0.35);
-  }
-  .panel-title{
-    display:flex;
-    align-items:center;
-    gap: 8px;
-    font-weight: 800;
-    font-size: 13.5px;
-    letter-spacing: 0.6px;
-    text-transform: uppercase;
-    margin-bottom: 14px;
-  }
-  .panel-sem .panel-title{ color: var(--red-x); }
-  .panel-com .panel-title{ color: var(--green); }
-  .panel-title .dot{
-    width: 18px; height: 18px;
-    border-radius: 50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-shrink: 0;
-  }
-  .panel-sem .dot{ background: rgba(239,106,106,0.2); }
-  .panel-com .dot{ background: rgba(107,236,158,0.2); }
-  .panel-title .dot svg{ width: 10px; height: 10px; }
-
-  .panel ul{
-    list-style: none;
-    display:flex;
-    flex-direction:column;
-    gap: 11px;
-  }
-  .panel li{
-    display:flex;
-    align-items:center;
-    gap: 10px;
-    font-size: clamp(13px, 3.5vw, 14.5px);
-    color: var(--text);
-    line-height: 1.4;
-  }
-  .panel li svg{ width: 15px; height: 15px; flex-shrink: 0; }
-  .panel-sem li svg{ color: var(--red-x); }
-  .panel-com li svg{ color: var(--green); }
-
-  /* ---- fechamento ---- */
-  .closing{
-    text-align: center;
-    font-size: clamp(13.5px, 3.6vw, 15px);
-    line-height: 1.6;
-    color: var(--text-dim);
-  }
-  .closing strong{ color: var(--gold-soft); }
-
-  /* ---- CTA ---- */
-  .cta-btn{
-    width: 100%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap: 10px;
-    background: linear-gradient(135deg, var(--gold-soft), var(--gold) 70%);
-    color: #1a1408;
-    font-weight: 700;
-    font-size: clamp(14.5px, 4vw, 16.5px);
-    padding: 17px 22px;
-    border-radius: 999px;
-    border: none;
-    cursor: pointer;
-    font-family: 'Manrope', sans-serif;
-    box-shadow: 0 10px 28px -8px rgba(201,162,74,0.55);
-    animation: ctaPulse 2.2s ease-in-out infinite;
-  }
-  @keyframes ctaPulse{
-    0%,100%{ box-shadow: 0 10px 28px -8px rgba(201,162,74,0.55); }
-    50%{ box-shadow: 0 10px 32px -4px rgba(201,162,74,0.8); }
-  }
-  .cta-btn svg{ width: 19px; height: 19px; flex-shrink: 0; }
-
-:host{ width:100%; }
-</style>
-<div class="frame">
-
-    <h1>Después de tu lectura, una cosa quedó <span class="accent">clara</span>: el camino para traer de vuelta a esa persona ya está frente a ti.</h1>
-
-    <div class="panel panel-sem">
-      <div class="panel-title">
-        <span class="dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
-        Sin el Ritual
-      </div>
-      <ul>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> El bloqueo espiritual sigue ahí, haciéndose más fuerte</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> Él se aleja cada vez más</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> Sigues esperando un mensaje que no llega</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> Corres el riesgo de perder a tu amado para siempre</li>
-      </ul>
-    </div>
-
-    <div class="panel panel-com">
-      <div class="panel-title">
-        <span class="dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
-        Con el Ritual
-      </div>
-      <ul>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> El bloqueo se rompe, de la forma correcta</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Él vuelve a escribirte, a invitarte a salir, a darte regalos</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Él vuelve corriendo, suplicando por volver</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Recuperas el control y su amor</li>
-      </ul>
-    </div>
-
-    <p class="closing">La elección entre estos dos caminos es <strong>tuya</strong>, ahora mismo.</p>
-
-    <button class="cta-btn" id="ctaBtn">
-      Quiero Recibir Mi Ritual
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-    </button>
-
-  </div>
-</template>
-
-<template id="tpl-step-6">
-<style>
-
-  
-
-  :host{
-    --bg: #0a0908;
-    --gold: #c9a24a;
-    --gold-soft: #e6c977;
-    --green: #6bec9e;
     --text: #f3ede1;
     --text-dim: #a89e8c;
     --border: rgba(201,162,74,0.28);
@@ -1214,24 +1018,15 @@ src="https://www.facebook.com/tr?id=1729760054721647&ev=PageView&noscript=1"
     padding: clamp(28px, 6vh, 44px) clamp(18px, 6vw, 26px) clamp(32px, 6vh, 48px);
     position:relative;
     z-index:1;
-    gap: clamp(20px, 3.6vh, 28px);
-  }
-
-  .label{
-    font-size: 11.5px;
-    font-weight: 800;
-    letter-spacing: 1.6px;
-    text-transform: uppercase;
-    color: var(--gold-soft);
+    gap: clamp(20px, 3.4vh, 26px);
   }
 
   h1{
     font-family: 'Playfair Display', serif;
     font-weight: 800;
     font-size: clamp(21px, 5.8vw, 26px);
-    line-height: 1.32;
+    line-height: 1.3;
     text-align: center;
-    max-width: 22ch;
   }
   h1 .accent{ color: var(--gold-soft); }
 
@@ -1240,103 +1035,74 @@ src="https://www.facebook.com/tr?id=1729760054721647&ev=PageView&noscript=1"
     line-height: 1.6;
     color: var(--text-dim);
     text-align: center;
-    max-width: 36ch;
+    max-width: 34ch;
+    margin-top: -10px;
   }
 
-  .deliverable-img{
+  .signs-grid{
     width: 100%;
-    aspect-ratio: 16/10;
-    border-radius: 14px;
-    overflow: hidden;
-    border: 1px solid var(--border);
-  }
-  .deliverable-img img{
-    width: 100%;
-    height: 100%;
-    min-width: 0;
-    min-height: 0;
-    object-fit: cover;
-    display: block;
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
   }
 
-  /* ---- checklist ---- */
-  .check-list{
-    width: 100%;
+  .sign-card{
     display:flex;
     flex-direction:column;
-    gap: 10px;
-  }
-  .check-item{
-    display:flex;
     align-items:center;
-    gap: 12px;
-    background: linear-gradient(155deg, rgba(107,236,158,0.1), rgba(19,17,16,0.5));
-    border: 1px solid rgba(107,236,158,0.3);
-    border-radius: 12px;
-    padding: 14px 16px;
-    font-size: clamp(13px, 3.5vw, 14.5px);
+    gap: 6px;
+    background: rgba(201,162,74,0.06);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px 6px;
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+  }
+  .sign-card:active{ transform: scale(0.96); }
+  .sign-card .symbol{
+    font-size: 26px;
+    color: var(--gold-soft);
+    line-height: 1;
+  }
+  .sign-card .name{
+    font-size: 11.5px;
     font-weight: 600;
     color: var(--text);
+    text-align: center;
   }
-  .check-item svg{ width: 18px; height: 18px; color: var(--green); flex-shrink: 0; }
+  .sign-card.selected{
+    background: rgba(201,162,74,0.18);
+    border-color: var(--gold-soft);
+    box-shadow: 0 0 0 1px var(--gold-soft);
+  }
+  .sign-card.disabled{
+    opacity: 0.35;
+    pointer-events: none;
+  }
 
-  /* ---- CTA ---- */
-  .cta-btn{
-    width: 100%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap: 10px;
-    background: linear-gradient(135deg, var(--gold-soft), var(--gold) 70%);
-    color: #1a1408;
-    font-weight: 700;
-    font-size: clamp(14.5px, 4vw, 16.5px);
-    padding: 17px 22px;
-    border-radius: 999px;
-    border: none;
-    cursor: pointer;
-    font-family: 'Manrope', sans-serif;
-    box-shadow: 0 10px 28px -8px rgba(201,162,74,0.55);
-    margin-top: 4px;
-    animation: ctaPulse 2.2s ease-in-out infinite;
+  .status-text{
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gold-soft);
+    text-align: center;
+    min-height: 18px;
   }
-  @keyframes ctaPulse{
-    0%,100%{ box-shadow: 0 10px 28px -8px rgba(201,162,74,0.55); }
-    50%{ box-shadow: 0 10px 32px -4px rgba(201,162,74,0.8); }
-  }
-  .cta-btn svg{ width: 19px; height: 19px; flex-shrink: 0; }
 
 :host{ width:100%; }
 </style>
 <div class="frame">
 
-    <div class="label">Basado en tu lectura</div>
+    <h1>¿Cuál es tu <span class="accent">signo</span>?</h1>
+    <p class="subtext">Esto me ayuda a entender mejor tu energía antes de preparar todo para ti.</p>
 
-    <h1>Aquí está todo lo que vas a <span class="accent">recibir</span></h1>
+    <div class="signs-grid" id="signsGrid"></div>
 
-    <div class="deliverable-img">
-      <img src="images/entregavel.webp" alt="">
-    </div>
-
-    <p class="subtext">Un ritual pensado especialmente para tu caso, con todo listo para que lo sigas de principio a fin.</p>
-
-    <div class="check-list">
-      <div class="check-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Ritual Gitano del Amor, personalizado para tu caso</div>
-      <div class="check-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Paso a paso simple de cómo hacerlo</div>
-      <div class="check-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Afirmaciones y comandos de cada etapa</div>
-      <div class="check-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Rutina de 7 días de blindaje espiritual</div>
-      <div class="check-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Audio guiado para usar junto con el ritual</div>
-    </div>
-
-    <button class="cta-btn" id="ctaBtn">
-      Continuar
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-    </button>
+    <p class="status-text" id="statusText">&nbsp;</p>
 
   </div>
 </template>
 
-<template id="tpl-step-7">
+<template id="tpl-step-6">
 <style>
 
   
@@ -1557,7 +1323,7 @@ src="https://www.facebook.com/tr?id=1729760054721647&ev=PageView&noscript=1"
   <div class="confetti-layer" id="confettiLayer"></div>
 </template>
 
-<template id="tpl-step-8">
+<template id="tpl-step-7">
 <style>
 
   
@@ -1953,6 +1719,210 @@ src="https://www.facebook.com/tr?id=1729760054721647&ev=PageView&noscript=1"
     <div class="confetti-layer" id="confettiLayer"></div>
 
   </div>
+</template>
+
+<template id="tpl-step-8">
+<style>
+
+  
+
+  :host{
+    --bg: #0a0908;
+    --gold: #c9a24a;
+    --gold-soft: #e6c977;
+    --green: #6bec9e;
+    --red-x: #ef6a6a;
+    --text: #f3ede1;
+    --text-dim: #a89e8c;
+    --border: rgba(201,162,74,0.28);
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }:host{
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Manrope', sans-serif;
+    min-height: 100vh;
+    display:flex;
+    justify-content:center;
+    position:relative;
+    overflow-x:hidden;
+  }
+
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background-image:
+      radial-gradient(1px 1px at 12% 10%, rgba(201,162,74,0.4) 0%, transparent 60%),
+      radial-gradient(1px 1px at 85% 8%, rgba(201,162,74,0.35) 0%, transparent 60%),
+      radial-gradient(1.5px 1.5px at 65% 40%, rgba(201,162,74,0.28) 0%, transparent 60%),
+      radial-gradient(1px 1px at 25% 65%, rgba(201,162,74,0.3) 0%, transparent 60%),
+      radial-gradient(1px 1px at 90% 80%, rgba(201,162,74,0.22) 0%, transparent 60%);
+    pointer-events:none;
+    opacity:0.7;
+  }
+
+  .frame{
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+    display:flex;
+    flex-direction:column;
+    padding: clamp(26px, 6vh, 40px) clamp(18px, 6vw, 26px) clamp(32px, 6vh, 48px);
+    position:relative;
+    z-index:1;
+    gap: clamp(20px, 3.6vh, 28px);
+  }
+
+  h1{
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: clamp(18px, 4.8vw, 21px);
+    line-height: 1.45;
+    text-align: center;
+    color: var(--text);
+  }
+  h1 .accent{ color: var(--gold-soft); }
+  h1 .arrow{
+    color: var(--gold-soft);
+    display: inline-block;
+    animation: arrowBounce 1.6s ease-in-out infinite;
+  }
+  @keyframes arrowBounce{
+    0%,100%{ transform: translateY(0); opacity: 0.6; }
+    50%{ transform: translateY(6px); opacity: 1; }
+  }
+
+  /* ---- sem / com panels ---- */
+  .panel{
+    border-radius: 16px;
+    padding: clamp(16px, 4.2vw, 20px);
+    border: 1px solid;
+  }
+  .panel-sem{
+    background: linear-gradient(155deg, rgba(239,106,106,0.12), rgba(19,17,16,0.5));
+    border-color: rgba(239,106,106,0.35);
+  }
+  .panel-com{
+    background: linear-gradient(155deg, rgba(107,236,158,0.12), rgba(19,17,16,0.5));
+    border-color: rgba(107,236,158,0.35);
+  }
+  .panel-title{
+    display:flex;
+    align-items:center;
+    gap: 8px;
+    font-weight: 800;
+    font-size: 13.5px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .panel-sem .panel-title{ color: var(--red-x); }
+  .panel-com .panel-title{ color: var(--green); }
+  .panel-title .dot{
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink: 0;
+  }
+  .panel-sem .dot{ background: rgba(239,106,106,0.2); }
+  .panel-com .dot{ background: rgba(107,236,158,0.2); }
+  .panel-title .dot svg{ width: 10px; height: 10px; }
+
+  .panel ul{
+    list-style: none;
+    display:flex;
+    flex-direction:column;
+    gap: 11px;
+  }
+  .panel li{
+    display:flex;
+    align-items:center;
+    gap: 10px;
+    font-size: clamp(13px, 3.5vw, 14.5px);
+    color: var(--text);
+    line-height: 1.4;
+  }
+  .panel li svg{ width: 15px; height: 15px; flex-shrink: 0; }
+  .panel-sem li svg{ color: var(--red-x); }
+  .panel-com li svg{ color: var(--green); }
+
+  /* ---- fechamento ---- */
+  .closing{
+    text-align: center;
+    font-size: clamp(13.5px, 3.6vw, 15px);
+    line-height: 1.6;
+    color: var(--text-dim);
+  }
+  .closing strong{ color: var(--gold-soft); }
+
+  /* ---- CTA ---- */
+  .cta-btn{
+    width: 100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap: 10px;
+    background: linear-gradient(135deg, var(--gold-soft), var(--gold) 70%);
+    color: #1a1408;
+    font-weight: 700;
+    font-size: clamp(14.5px, 4vw, 16.5px);
+    padding: 17px 22px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Manrope', sans-serif;
+    box-shadow: 0 10px 28px -8px rgba(201,162,74,0.55);
+    animation: ctaPulse 2.2s ease-in-out infinite;
+  }
+  @keyframes ctaPulse{
+    0%,100%{ box-shadow: 0 10px 28px -8px rgba(201,162,74,0.55); }
+    50%{ box-shadow: 0 10px 32px -4px rgba(201,162,74,0.8); }
+  }
+  .cta-btn svg{ width: 19px; height: 19px; flex-shrink: 0; }
+
+:host{ width:100%; }
+</style>
+<div class="frame">
+
+    <h1>Llegaste hasta aquí, y la elección es <span class="accent">obvia</span>. No esperes perderlo para siempre para tomar esta decisión <span class="arrow">↓</span></h1>
+
+    <div class="panel panel-sem">
+      <div class="panel-title">
+        <span class="dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
+        Sin el Ritual
+      </div>
+      <ul>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> El bloqueo espiritual sigue ahí, haciéndose más fuerte</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> Él se aleja cada vez más</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> Sigues esperando un mensaje que no llega</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> Corres el riesgo de perder a tu amado para siempre</li>
+      </ul>
+    </div>
+
+    <div class="panel panel-com">
+      <div class="panel-title">
+        <span class="dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
+        Con el Ritual
+      </div>
+      <ul>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> El bloqueo se rompe, de la forma correcta</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Él vuelve a escribirte, a invitarte a salir, a darte regalos</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Él vuelve corriendo, suplicando por volver</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Recuperas el control y su amor</li>
+      </ul>
+    </div>
+
+    <p class="closing">La elección entre estos dos caminos es <strong>tuya</strong>, ahora mismo.</p>
+
+    <button class="cta-btn" id="ctaBtn">
+      Quiero Recibir Mi Ritual
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+    </button>
+
+  </div>
 </template><script type="text/plain" id="script-step-1">
 
     root.getElementById('ctaBtn').addEventListener('click', () => {
@@ -2027,7 +1997,7 @@ src="https://www.facebook.com/tr?id=1729760054721647&ev=PageView&noscript=1"
     }
 
     // Calcula el tiempo de "escribiendo..." proporcional al tamaño del mensaje,
-    // para que un mensaje corto ("Hola, hija") no demore igual que uno largo.
+    // para que un mensaje corto ("Hola, cariño") no demore igual que uno largo.
     function typingDelayFor(text){
       const clean = text.replace(/<[^>]+>/g, ''); // tira tags tipo <strong>
       const ms = 500 + clean.length * 28;
@@ -2340,7 +2310,7 @@ src="https://www.facebook.com/tr?id=1729760054721647&ev=PageView&noscript=1"
 
     // Início
     setTimeout(() => {
-      sendIncoming("Hola, hija 🙏", () => {
+      sendIncoming("Hola, cariño 🙏", () => {
         sendIncoming("Aquí está la Gitana Samira.", () => {
           const msgs = [
             "A partir de ahora nos vamos a conocer mejor, para que yo entienda bien cómo puedo ayudarte.",
@@ -2458,27 +2428,53 @@ src="https://www.facebook.com/tr?id=1729760054721647&ev=PageView&noscript=1"
 
 <script type="text/plain" id="script-step-5">
 
-    root.getElementById('ctaBtn').addEventListener('click', () => {
-      goNext();
-      if (window.parent && window.parent !== window){
-        window.parent.postMessage('funil:avancar', '*');
-      }
+    const signsGrid = root.getElementById('signsGrid');
+    const statusText = root.getElementById('statusText');
+
+    const SIGNS = [
+      { symbol: '♈', name: 'Aries' },
+      { symbol: '♉', name: 'Tauro' },
+      { symbol: '♊', name: 'Géminis' },
+      { symbol: '♋', name: 'Cáncer' },
+      { symbol: '♌', name: 'Leo' },
+      { symbol: '♍', name: 'Virgo' },
+      { symbol: '♎', name: 'Libra' },
+      { symbol: '♏', name: 'Escorpio' },
+      { symbol: '♐', name: 'Sagitario' },
+      { symbol: '♑', name: 'Capricornio' },
+      { symbol: '♒', name: 'Acuario' },
+      { symbol: '♓', name: 'Piscis' },
+    ];
+
+    let chosen = false;
+
+    SIGNS.forEach(sign => {
+      const card = document.createElement('div');
+      card.className = 'sign-card';
+      card.innerHTML = `<span class="symbol">${sign.symbol}</span><span class="name">${sign.name}</span>`;
+      card.addEventListener('click', () => {
+        if (chosen) return;
+        chosen = true;
+
+        card.classList.add('selected');
+        root.querySelectorAll('.sign-card').forEach(c => {
+          if (c !== card) c.classList.add('disabled');
+        });
+        statusText.textContent = '¡Perfecto, ya lo anoté aquí! ✨';
+
+        setTimeout(() => {
+          goNext();
+          if (window.parent && window.parent !== window){
+            window.parent.postMessage('funil:avancar', '*');
+          }
+        }, 900);
+      });
+      signsGrid.appendChild(card);
     });
   
 </script>
 
 <script type="text/plain" id="script-step-6">
-
-    root.getElementById('ctaBtn').addEventListener('click', () => {
-      goNext();
-      if (window.parent && window.parent !== window){
-        window.parent.postMessage('funil:avancar', '*');
-      }
-    });
-  
-</script>
-
-<script type="text/plain" id="script-step-7">
 
     const waiting = root.getElementById('waiting');
     const reveal = root.getElementById('reveal');
@@ -2520,7 +2516,7 @@ src="https://www.facebook.com/tr?id=1729760054721647&ev=PageView&noscript=1"
   
 </script>
 
-<script type="text/plain" id="script-step-8">
+<script type="text/plain" id="script-step-7">
 
     // Genera un código de barras fiel a un Code-128 real: altura uniforme,
     // solo el ANCHO de las barras varía (fino/medio/grueso), con un patrón de espaciado real.
@@ -2582,6 +2578,17 @@ src="https://www.facebook.com/tr?id=1729760054721647&ev=PageView&noscript=1"
         if (window.parent && window.parent !== window){
           window.parent.postMessage('funil:avancar', '*');
         }
+      }
+    });
+  
+</script>
+
+<script type="text/plain" id="script-step-8">
+
+    root.getElementById('ctaBtn').addEventListener('click', () => {
+      goNext();
+      if (window.parent && window.parent !== window){
+        window.parent.postMessage('funil:avancar', '*');
       }
     });
   
