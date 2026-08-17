@@ -212,21 +212,17 @@ src="https://www.facebook.com/tr?id=1729760054721647&ev=PageView&noscript=1"
   .cta-btn svg{ width: 19px; height: 19px; flex-shrink: 0; }
 
   /* aviso de trabalho espiritual */
-  .callout{
-    background: linear-gradient(155deg, rgba(110,20,20,0.35), rgba(19,17,16,0.6));
-    border: 1px solid rgba(201,162,74,0.35);
-    border-radius: 14px;
-    padding: clamp(16px, 4vw, 20px);
-    font-size: clamp(13.5px, 3.6vw, 15px);
-    line-height: 1.6;
-    color: var(--gold-soft);
-    text-align: left;
-    max-width: 38ch;
+  .lock-note{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap: 6px;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--text-dim);
+    opacity: 0.85;
   }
-  .callout strong{
-    color: var(--text);
-    font-weight: 800;
-  }
+  .lock-note svg{ width: 14px; height: 14px; flex-shrink: 0; }
 
   .loading-overlay{
     position: fixed;
@@ -279,8 +275,9 @@ src="https://www.facebook.com/tr?id=1729760054721647&ev=PageView&noscript=1"
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
     </button>
 
-    <div class="callout">
-      <strong>Atención:</strong> esto no es magia negra, brujería ni amarre temporal. Si buscas eso, puedes irte de aquí.
+    <div class="lock-note">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+      100% confidencial y anónima
     </div>
 
   </div>
